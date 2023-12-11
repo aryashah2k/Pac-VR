@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacman WebVR</title>
+  <meta name="description" content="Pacman WebVR using A-Frame">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/site.webmanifest">
+  <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#2121de">
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/assets/icons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <script src="dist/bundle.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="logo-container overlay">
+    <img id="logo" src="assets/images/logo.png">
+    <button id="start" disabled>
+      <i class="fa fa-spinner fa-spin"></i>
+    </button>
+  </div>
+  
+
+  <div id="sound" class="overlay fa fa-volume-up fa-2x"></div>
+  <div id="gameover" class="overlay"></div> 
+  <div id="ready" class="overlay">READY!</div> 
+
+  <a-scene>
+    <a-entity position="0 2.25 -15"
+              particle-system="preset: dust">
+    </a-entity>
+
+    <a-assets>
+      <a-asset-item id="navmesh" src="assets/models/navmesh.gltf"></a-asset-item>
+      <a-asset-item id="ghost" src="assets/models/ghost.gltf"></a-asset-item>
+      <a-asset-item id="maze" src="assets/models/maze.gltf"></a-asset-item>
+      <img id="life" src="assets/images/pacman.png">
+    </a-assets>
+  
+    <!-- Player -->
+    <a-entity movement-controls="constrainToNavMesh: true"
+              keyboard-controls="enabled: false"
+              gamepad-controls="enabled: false"
+              trackpad-controls="enabled: false"
+              touch-controls="enabled: false"
+              position="0 0 4"
+              nav-agent="speed: 0.7; lookAtTarget: false"
+              player>
+      <a-camera position="0 1 0"
+                wasd-controls="enabled: false"
+                look-controls="enabled: false">
+        <a-entity> 
+          <a-image position="-0.15 0.225 -0.3" 
+                   width="0.015"
+                   height="0.015"
+                   src="#life"
+                   life>
+          </a-image> 
+          <a-image position="-0.13 0.225 -0.3" 
+                   width="0.015"
+                   height="0.015"
+                   src="#life"
+                   life>
+          </a-image> 
+          <a-image position="-0.11 0.225 -0.3" 
+                   width="0.015"
+                   height="0.015"
+                   src="#life"
+                   life>
+          </a-image>
+          <a-entity position="0 0.225 -0.3" 
+                    text="color: white; align: center; value: HIGH SCORE; width: 0.4">
+          </a-entity>
+          <a-entity id="score"
+                    position="-0.11 0.20 -0.3" 
+                    text="color: white; align: center; width: 0.4">
+          </a-entity>
+          <a-entity id="highscore"
+                    position="0 0.20 -0.3" 
+                    text="color: white; align: center; width: 0.4">
+          </a-entity>
+        </a-entity>
+      </a-camera>
+      <a-sphere color="yellow"
+                radius="0.4"
+                position="0 0.5 0.05">
+      </a-sphere>
+    </a-entity>
+
+    <!-- Nav mesh. -->
+    <a-entity nav-mesh
+              normal-material
+              visible="false"
+              gltf-model="#navmesh">
+    </a-entity>
+
+    <!-- Ghost -->
+    <a-gltf-model gltf-model="#ghost"
+                 position="0 0 -2.1"
+                 nav-agent="speed: 0.65"
+                 ghost="0xFF0000">
+    </a-gltf-model>
+
+    <a-gltf-model gltf-model="#ghost"
+                  position="-1 0 -0.5"
+                  nav-agent="speed: 0.65"
+                  ghost="0x00FFDE">
+    </a-gltf-model>
+
+    <a-gltf-model gltf-model="#ghost"
+                  position="0 0 -0.5"
+                  nav-agent="speed: 0.65"
+                  ghost="0xFFB8DE">
+    </a-gltf-model>
+
+    <a-gltf-model gltf-model="#ghost"
+                  position="1 0 -0.5"
+                  nav-agent="speed: 0.65"
+                  ghost="0xFFB847">
+    </a-gltf-model>
+
+    <!-- Scene -->
+    <a-gltf-model scale="1 1.6 1"
+                  gltf-model="#maze"
+                  maze>
+    </a-gltf-model>
+
+    <a-plane rotation="-90 0 0"
+             width="15"
+             height="16"
+             color="black">
+    </a-plane>
+
+    <a-sky color="black"></a-sky>
+  </a-scene>
+</body>
+</html>
